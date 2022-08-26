@@ -18,6 +18,12 @@ sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz
 ########### 更改大雕源码（可选）###########
 sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.19/g' target/linux/x86/Makefile
 
+########### 更换argon主题 ###########
+cd package/lean
+rm -rf luci-theme-argon
+git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/' feeds/luci/collections/luci/Makefile
+
 ########### 更新lean的内置的smartdns版本 ###########
 sed -i 's/1.2022.37/1.2022.37.1/g' feeds/packages/net/smartdns/Makefile
 sed -i 's/5a2559f0648198c290bb8839b9f6a0adab8ebcdc/96d3deb595eae4f849cb2a51c69a9be89947fa0d/g' feeds/packages/net/smartdns/Makefile
