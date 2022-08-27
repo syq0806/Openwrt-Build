@@ -19,10 +19,10 @@ sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz
 sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.19/g' target/linux/x86/Makefile
 
 ########### 更换argon主题 ###########
-# cd package/lean
-# rm -rf luci-theme-argon
-# git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
-# sed -i 's/luci-theme-bootstrap/luci-theme-argon/' feeds/luci/collections/luci/Makefile
+cd package/lean
+rm -rf luci-theme-argon
+git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+sed -i 's/luci-theme-bootstrap/luci-theme-argon/' feeds/luci/collections/luci/Makefile
 
 ########### 更新lean的内置的smartdns版本 ###########
 sed -i 's/1.2022.37/1.2022.37.1/g' feeds/packages/net/smartdns/Makefile
