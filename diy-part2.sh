@@ -35,3 +35,6 @@ sed -i 's/^PKG_MIRROR_HASH/#&/' feeds/packages/net/smartdns/Makefile
 ########### 安装smartdns（必选）###########
 git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone https://github.com/pymumu/smartdns.git package/smartdns
+
+########### 安装网易云音乐解锁###########
+git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
