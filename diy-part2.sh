@@ -16,7 +16,7 @@ sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_genera
 sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
 
 ########### 更改大雕源码（可选）###########
-sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.19/g' target/linux/x86/Makefile
+# sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.19/g' target/linux/x86/Makefile
 
 ########### 更改默认主题（可选）###########
 # 删除自定义源默认的 argon 主题
@@ -28,15 +28,11 @@ sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=5.19/g' target/linux/x86/Makefi
 # make menuconfig时记得勾选LuCI ---> Applications ---> luci-app-argon-config
 
 ########### 更新lean的内置的smartdns版本 ###########
-sed -i 's/1.2022.37/1.2022.37.2/g' feeds/packages/net/smartdns/Makefile
-sed -i 's/5a2559f0648198c290bb8839b9f6a0adab8ebcdc/64e5b326cc53df1fec680cfa28ceec5d8a36fcbc/g' feeds/packages/net/smartdns/Makefile
-sed -i 's/^PKG_MIRROR_HASH/#&/' feeds/packages/net/smartdns/Makefile
+# sed -i 's/1.2022.37/1.2022.37.2/g' feeds/packages/net/smartdns/Makefile
+# sed -i 's/5a2559f0648198c290bb8839b9f6a0adab8ebcdc/64e5b326cc53df1fec680cfa28ceec5d8a36fcbc/g' feeds/packages/net/smartdns/Makefile
+# sed -i 's/^PKG_MIRROR_HASH/#&/' feeds/packages/net/smartdns/Makefile
 
 ########### 安装smartdns（必选）###########
-git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
+# git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone https://github.com/pymumu/smartdns.git package/smartdns
 
-########### 删除lean自带网易云音乐解锁###########
-rm -rf feeds/luci/applications/luci-app-unblockmusic
-########### 安装网易云音乐解锁###########
-git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
