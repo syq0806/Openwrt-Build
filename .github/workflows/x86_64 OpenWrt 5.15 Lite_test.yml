@@ -1,0 +1,99 @@
+name: x86_64 OpenWrt 5.15 Lite
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: 30 13 * * 6
+
+env:
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: config/x86_64_5.15_lite.config
+  DIY_P1_SH: diy/diy-part1.sh
+  DIY_P2_SH: diy/diy-part2.sh
+  UPLOAD_RELEASE: true
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    - name: Checkout
+      uses: actions/checkout@main
+    - name: Initialization environment
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
+    - name: Clone source code # 克隆源代码
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt   
+    - name: Load custom feeds
+      run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        chmod +x $DIY1_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY1_SH
+    - name: Update feeds
+      run: cd openwrt && ./scripts/feeds update -a
+
+    - name: Install feeds
+      run: cd openwrt && ./scripts/feeds install -a
+
+    - name: Load custom configuration
+      run: |
+        [ -e files ] && mv files openwrt/files
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x $DIY_P2_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P2_SH
+    - name: Download package
+      run: |
+        cd openwrt
+        make defconfig
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+    - name: Compile the firmware
+      id: compile
+      run: |
+        cd openwrt
+        echo -e "$(($(nproc) + 1)) thread compile"
+        make -j$(($(nproc) + 1)) || make -j1 V=s
+        echo "::set-output name=status::success"
+    - name: Check space usage
+      if: (!cancelled())
+      run: df -hT
+    - name: Organize files
+      if: steps.compile.outputs.status == 'success'
+      run: |
+        rm -rf openwrt/bin/targets/x86/64/packages
+        cd openwrt/bin/targets/*/*
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "organize=success" >> $GITHUB_ENV
+    - name: Create release
+      if: env.UPLOAD_RELEASE == 'true' && env.organize == 'success'
+      uses: ncipollo/release-action@v1
+      with:
+        name: ${{ env.DATE }} 🚀 x86_64 OpenWrt 5.15 Lite精简版 | 自动编译
+        allowUpdates: true
+        removeArtifacts: true
+        tag: x86_64 OpenWrt 5.15 Lite
+        commit: master
+        token: ${{ secrets.ACCESS_TOKEN }}
+        body: |
+          ${{ env.useVersionInfo }}
+        artifacts: ${{ env.FIRMWARE }}/*
+  
