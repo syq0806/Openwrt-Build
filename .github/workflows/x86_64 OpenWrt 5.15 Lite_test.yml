@@ -1,4 +1,4 @@
-name: x86_64 OpenWrt 5.15 Lite
+name: x86_64 OpenWrt 5.15 Lite test
 
 on:
   repository_dispatch:
