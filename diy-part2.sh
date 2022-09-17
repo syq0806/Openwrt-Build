@@ -36,5 +36,5 @@ sed -i 's/^PKG_MIRROR_HASH/#&/' feeds/packages/net/smartdns/Makefile
 git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 #git clone https://github.com/pymumu/smartdns.git package/smartdns
 ########### 安装adguardhome（必选）###########
-git clone https://github.com/rufengsuixing/luci-app-adguardhome.git package/luci-app-adguardhome
+#git clone https://github.com/rufengsuixing/luci-app-adguardhome.git package/luci-app-adguardhome
 
