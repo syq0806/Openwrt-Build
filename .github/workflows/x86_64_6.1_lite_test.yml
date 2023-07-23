@@ -47,7 +47,7 @@ jobs:
       run: |
         git clone --depth 1 $REPO_URL -b $REPO_BRANCH openwrt
         cd openwrt
-        cp -f ../diy-part1.sh ./
+        cp -f ../diy/diy-part1.sh ./
         chmod +x ./diy-part1.sh && ./diy-part1.sh
     - name: luci-theme-argon install
       run: |
@@ -63,7 +63,7 @@ jobs:
         ./scripts/feeds install golang cdnspeedtest
         ./scripts/feeds install -a
 
-        cp -f ../diy-part2.sh ./        
+        cp -f ../diy/diy-part2.sh ./        
         chmod +x ./diy-part2.sh && ./diy-part2.sh
         
         sed -i "s/KERNEL_PATCHVER:=*.*/KERNEL_PATCHVER:=6.1/g" target/linux/x86/Makefile
@@ -74,7 +74,7 @@ jobs:
         
     - name: Configuration Customization - Build_x86_64 OpenWrt 6.1 Lite
       env:
-        CONFIG_FILE: './x86_64_6.1_lite.config'
+        CONFIG_FILE: './config/x86_64_6.1_lite_test.config'
       run: |
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
         cd openwrt && make defconfig
