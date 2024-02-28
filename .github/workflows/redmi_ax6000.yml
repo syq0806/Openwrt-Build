@@ -31,7 +31,7 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  OPENWRT_NAME: Immortalwrt
+  OPENWRT_NAME: ImmortalWrt
 
 jobs:
   build:
