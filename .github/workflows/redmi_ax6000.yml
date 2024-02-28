@@ -7,7 +7,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-name: Build Redmi_AX6000_immortalwrt
+name: Build Redmi_AX6000_ImmortalWrt
 
 on:
   repository_dispatch:
@@ -128,13 +128,13 @@ jobs:
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: AX6000-Packages
+        name: Redmi_AX6000_Packages
         path: openwrt/bin/packages    
     - name: 上传config到github
       uses: actions/upload-artifact@main
       if: steps.organize.outputs.status == 'success' && !cancelled()
       with:
-        name: AX6000-config
+        name: Redmi_AX6000_config
         path: openwrt/.config  
     - name: 生成release标签
       id: tag
