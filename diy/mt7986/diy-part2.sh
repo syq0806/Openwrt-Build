@@ -17,3 +17,7 @@
 sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
+
+########### 更新内置的smartdns版本 ###########
+sed -i 's/43/45/g' feeds/packages/net/smartdns/Makefile
+sed -i 's/^PKG_HASH/#&/' feeds/packages/net/smartdns/Makefile
