@@ -20,4 +20,4 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-n
 
 ########### 更新内置的smartdns版本 ###########
 sed -i 's/43/45/g' feeds/packages/net/smartdns/Makefile
-sed -i 's/^PKG_HASH/#&/' feeds/packages/net/smartdns/Makefile
+
