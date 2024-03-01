@@ -23,7 +23,6 @@ curl -sL https://raw.githubusercontent.com/pymumu/smartdns/master/package/openwr
 
 ########### 更新内置的passwall版本 ###########
 rsync -a feeds/passwall_luci/luci-app-passwall/  feeds/luci/applications/luci-app-passwall/
-rsync -a feeds/passwall_packages/ feeds/packages/net/
 pushd feeds/packages/lang
 rm -rf golang && svn co https://github.com/sbwml/packages_lang_golang/tree/22.x/golang
 popd
