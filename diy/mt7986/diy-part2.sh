@@ -22,7 +22,7 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-n
 # curl -sL https://raw.githubusercontent.com/pymumu/smartdns/master/package/openwrt/Makefile > feeds/packages/net/smartdns/Makefile
 
 ########### 更新内置的passwall版本 ###########
-rsync -a feeds/passwall_luci/luci-app-passwall/  feeds/luci/applications/luci-app-passwall/
+# rsync -a feeds/passwall_luci/luci-app-passwall/  feeds/luci/applications/luci-app-passwall/
 # pushd feeds/packages/lang
 # rm -rf golang && svn co https://github.com/sbwml/packages_lang_golang/tree/22.x/golang
 # popd
