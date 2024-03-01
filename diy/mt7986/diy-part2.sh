@@ -26,3 +26,4 @@ rsync -a feeds/passwall_luci/luci-app-passwall/  feeds/luci/applications/luci-ap
 rsync -a feeds/passwall_packages/ feeds/packages/net/
 pushd feeds/packages/lang
 rm -rf golang && svn co https://github.com/sbwml/packages_lang_golang/tree/22.x/golang
+popd
