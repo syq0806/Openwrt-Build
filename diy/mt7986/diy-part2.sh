@@ -19,7 +19,7 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
 
 ########### 更新内置的smartdns版本 ###########
-curl -sL https://raw.githubusercontent.com/pymumu/smartdns/master/package/openwrt/Makefile > feeds/packages/net/smartdns/Makefile
+# curl -sL https://raw.githubusercontent.com/pymumu/smartdns/master/package/openwrt/Makefile > feeds/packages/net/smartdns/Makefile
 
 ########### 更新内置的passwall版本 ###########
 # rm -rf feeds/luci/applications/luci-app-passwall
