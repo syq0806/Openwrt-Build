@@ -41,6 +41,5 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/M
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
 
 ########### 更新内置的golang版本 ###########
-pushd feeds/packages/lang
-rm -rf golang && svn co https://github.com/sbwml/packages_lang_golang/tree/22.x/golang
-popd
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
