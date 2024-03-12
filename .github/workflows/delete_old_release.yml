@@ -16,6 +16,6 @@ jobs:
       with:
         keep_latest: 3
         keep_min_download_counts: 1 # 可选参数
-        delete_expired_data: 5 # 可选参数
+        delete_expired_data: 10 # 可选参数
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
