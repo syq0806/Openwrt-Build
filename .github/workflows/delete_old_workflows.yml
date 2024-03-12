@@ -1,4 +1,4 @@
-name: Delete-Old-Release
+name: Delete-Old-W
 
 on: 
   repository_dispatch:
