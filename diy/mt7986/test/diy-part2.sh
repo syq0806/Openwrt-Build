@@ -27,7 +27,6 @@ del_data="
 ./feeds/packages/devel/gn
 ./feeds/packages/net/ipt2socks
 ./feeds/packages/net/xray-core
-./package/network/utils/iptables
 "
 
 for cmd in $del_data;
