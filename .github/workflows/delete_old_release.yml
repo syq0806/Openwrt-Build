@@ -14,7 +14,6 @@ jobs:
     - name: Delete Old Releases
       uses: dev-drprasad/delete-older-releases@v0.3.3
       with:
-        repo: syq0806/Openwrt-Build # 默认为当前仓库
         keep_latest: 3
         keep_min_download_counts: 1 # 可选参数
         delete_expired_data: 5 # 可选参数
