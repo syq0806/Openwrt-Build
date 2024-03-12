@@ -155,9 +155,3 @@ jobs:
         name: ${{ env.FILE_DATE }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-    - name: 保留最近三个release
-      run: |
-        releases=$(gh release list --limit 3 --json name | jq -r '.[].name')
-        for release in $releases; do
-          gh release delete $release
-        done
