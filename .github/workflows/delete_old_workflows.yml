@@ -1,4 +1,4 @@
-name: Delete-Old-W
+name: Delete-Old-Workflows
 
 on: 
   repository_dispatch:
