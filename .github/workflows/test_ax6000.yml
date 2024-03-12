@@ -7,7 +7,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-name: Build Redmi_AX6000_ImmortalWrt
+name: Build Redmi_AX6000_ImmortalWrt_Test
 
 on:
   repository_dispatch:
