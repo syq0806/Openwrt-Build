@@ -2,7 +2,6 @@
 
 del_data="
 ./feeds/luci/applications/luci-app-passwall
-./feeds/luci/applications/luci-app-smartdns
 ./feeds/packages/net/brook
 ./feeds/packages/net/dns2socks
 ./feeds/packages/net/microsocks
@@ -26,7 +25,6 @@ del_data="
 ./feeds/packages/net/hysteria
 ./feeds/packages/net/tuic-client
 ./feeds/packages/devel/gn
-./feeds/packages/net/smartdns
 ./feeds/packages/net/ipt2socks
 ./feeds/packages/net/xray-core
 ./package/network/utils/iptables
