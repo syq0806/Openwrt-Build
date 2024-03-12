@@ -1,0 +1,26 @@
+name: Delete-Old-Releases
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天 UTC 时间 00:00 执行
+
+jobs:
+  delete_old_releases:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up gh CLI
+      uses: actions/setup-gh@v2
+
+    - name: List recent releases
+      run: gh release list --limit 3 --json name
+
+    - name: Delete old releases
+      run: |
+        releases=$(gh release list --limit 3 --json name | jq -r '.[].name')
+        for release in $releases; do
+          gh release delete $release
+        done
