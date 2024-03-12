@@ -1,0 +1,23 @@
+name: Delete Old Releases
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # 每天 UTC 时间 00:00 执行一次，您可以根据需要调整时间
+
+jobs:
+  delete_old_releases:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Delete Old Releases
+      uses: dev-drprasad/delete-older-releases@v0.3.3
+      with:
+        repo: syq0806/Openwrt-Build # 默认为当前仓库
+        keep_latest: 3
+        keep_min_download_counts: 1 # 可选参数
+        delete_expired_data: 10 # 可选参数
+        delete_tag_pattern: beta # 默认为 ""
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
