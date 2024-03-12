@@ -1,11 +1,11 @@
-name: Delete-Old-Releases
+name: Delete-Old-Workflows
 
-on:
-  schedule:
-    - cron: '0 0 * * *' # 每天 UTC 时间 00:00 执行
+on: 
+  repository_dispatch:
+  workflow_dispatch:
 
 jobs:
-  delete_old_releases:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,6 +14,8 @@ jobs:
 
     - name: Set up gh CLI
       uses: actions/setup-gh@v2
+      with:
+        gh-version: 2.2.0
 
     - name: List recent releases
       run: gh release list --limit 3 --json name
