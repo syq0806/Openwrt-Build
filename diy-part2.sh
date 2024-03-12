@@ -27,16 +27,14 @@ sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz
 # sed -i 's/luci-theme-bootstrap/luci-theme-argon/' feeds/luci/collections/luci/Makefile
 # make menuconfig时记得勾选LuCI ---> Applications ---> luci-app-argon-config
 
-########### 更新lean的内置的smartdns版本 ###########
-sed -i 's/1.2022.38/1.2022.40/g' feeds/packages/net/smartdns/Makefile
-sed -i 's/5a2559f0648198c290bb8839b9f6a0adab8ebcdc/d792e5f7f71ce9320b341fe02135077e00fa3e21/g' feeds/packages/net/smartdns/Makefile
-sed -i 's/^PKG_MIRROR_HASH/#&/' feeds/packages/net/smartdns/Makefile
+########### 更新内置的smartdns版本 ###########
+curl -sL https://raw.githubusercontent.com/pymumu/smartdns/master/package/openwrt/Makefile > feeds/packages/net/smartdns/Makefile
 
 ########### 安装smartdns（必选）###########
 git clone -b lede https://github.com/pymumu/luci-app-smartdns.git package/luci-app-smartdns
 # git clone https://github.com/pymumu/smartdns.git package/smartdns
 ########### 安装adguardhome（必选）###########
-#git clone https://github.com/rufengsuixing/luci-app-adguardhome.git package/luci-app-adguardhome
+# git clone https://github.com/rufengsuixing/luci-app-adguardhome.git package/luci-app-adguardhome
 ########### 安装ddns-go（必选）###########
 git clone https://github.com/sirpdboy/luci-app-ddns-go.git package/ddns-go
 ########### luci-app-cloudflarespeedtest.git ###########
