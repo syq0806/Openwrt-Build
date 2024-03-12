@@ -1,0 +1,163 @@
+#
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# Description: Build OpenWrt using GitHub Actions
+#
+name: Build Redmi_AX6000_ImmortalWrt
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
+  schedule:
+    - cron: 0 7 * * 5
+
+env:
+  REPO_URL: https://github.com/padavanonly/immortalwrt-mt798x
+  REPO_BRANCH: openwrt-21.02
+  FEEDS_CONF: feeds.conf.default
+  CONFIG_FILE: config/redmi_ax6000.config
+  DIY_P1_SH: diy/mt7986/test/diy-part1.sh
+  DIY_P2_SH: diy/mt7986/test/diy-part2.sh
+  SSH_ACTIONS: false
+  UPLOAD_FIRMWARE: true
+  UPLOAD_RELEASE: true
+  TZ: Asia/Shanghai
+  OPENWRT_NAME: ImmortalWrt
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    
+    steps:
+    - name: 检查项目分支
+      uses: actions/checkout@main
+
+    - name: 初始化编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        sudo rm -rf /etc/apt/sources.list.d/* /usr/share/dotnet /usr/local/lib/android /opt/ghc
+        sudo -E apt-get -qq update
+        sudo -E apt-get -qq install $(curl -fsSL git.io/depends-ubuntu-2004)
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo timedatectl set-timezone "$TZ"
+        sudo mkdir -p /workdir
+        sudo chown $USER:$GROUPS /workdir
+        
+    - name: 下载固件源码
+      working-directory: /workdir
+      run: |
+        df -hT $PWD
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
+        ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+         
+    - name: 加载feeds.conf.default & DIY_P1_SH
+      run: |
+        [ -e $FEEDS_CONF ] && mv $FEEDS_CONF openwrt/feeds.conf.default
+        chmod +x $DIY_P1_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P1_SH
+        
+    - name: 更新 & 安装 feeds
+      run: |
+        cd openwrt
+        ./scripts/feeds update -a
+        ./scripts/feeds install -a
+      
+    - name: 加载config & DIY_P2_SH
+      run: |
+        [ -e $CONFIG_FILE ] && mv $CONFIG_FILE openwrt/.config
+        chmod +x $DIY_P2_SH
+        cd openwrt
+        $GITHUB_WORKSPACE/$DIY_P2_SH
+        
+    - name: 下载安装包
+      id: package
+      run: |
+        cd openwrt
+        make defconfig
+        make download -j$(nproc)
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+        
+    - name: 编译固件
+      id: compile
+      run: |
+        cd openwrt
+        echo -e "$(nproc) thread compile"
+        make -j$(nproc) || make -j1 || make -j1 V=s
+        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*DEVICE_(.*)=y/\1/' > DEVICE_NAME
+        [ -s DEVICE_NAME ] && echo "DEVICE_NAME=$(cat DEVICE_NAME)" >> $GITHUB_ENV
+        grep '^CONFIG_TARGET.*DEVICE.*=y' .config | sed -r 's/.*TARGET_.*_(.*)_DEVICE_.*=y/\1/' > TARGET_NAME
+        [ -s TARGET_NAME ] && echo "TARGET_NAME=$(cat TARGET_NAME)" >> $GITHUB_ENV
+        echo "FILE_DATE=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_OUTPUT
+        
+    - name: 查看磁盘使用情况
+      if: (!cancelled())
+      run: df -hT
+
+    - name: 整理文件并重命名
+      id: organize
+      if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
+      run: | 
+        cd openwrt/bin/targets/*/*
+        rm -rf packages
+        sudo -E apt-get -qq install rename
+        rename 's/.*${{ env.TARGET_NAME }}/${{ env.FILE_DATE }}-${{ env.OPENWRT_NAME }}/' *
+        echo "FIRMWARE=$PWD" >> $GITHUB_ENV
+        echo "status=success" >> $GITHUB_OUTPUT
+      
+    - name: 上传固件到github
+      uses: actions/upload-artifact@main
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: ${{ env.FILE_DATE }}-${{ env.OPENWRT_NAME }}-${{ env.DEVICE_NAME }}
+        path: ${{ env.FIRMWARE }}
+    - name: 上传packages到github
+      uses: actions/upload-artifact@main
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: Redmi_AX6000_Packages
+        path: openwrt/bin/packages    
+    - name: 上传config到github
+      uses: actions/upload-artifact@main
+      if: steps.organize.outputs.status == 'success' && !cancelled()
+      with:
+        name: Redmi_AX6000_config
+        path: openwrt/.config  
+    - name: 生成release标签
+      id: tag
+      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      run: |
+        echo "release_tag=${{ env.FILE_DATE }}" >> $GITHUB_OUTPUT
+        touch release.txt
+        echo "📥 固件下载" >> release.txt
+        echo "status=success" >> $GITHUB_OUTPUT
+        
+    - name: 发布至release
+      uses: softprops/action-gh-release@v1
+      if: steps.tag.outputs.status == 'success' && !cancelled()
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        files: ${{ env.FIRMWARE }}/*squashfs-sysupgrade*
+        name: ${{ env.FILE_DATE }}
+        tag_name: ${{ steps.tag.outputs.release_tag }}
+        body_path: release.txt
+    - name: 保留最近三个release
+      run: |
+        releases=$(gh release list --limit 3 --json name | jq -r '.[].name')
+        for release in $releases; do
+          gh release delete $release
+        done
