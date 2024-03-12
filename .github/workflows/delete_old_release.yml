@@ -1,30 +1,29 @@
-name: Delete-Old-Releases
+name: Delete-Old-Release
 
-on:
-  workflow_dispatch:  
+on: 
+  repository_dispatch:
+  workflow_dispatch:
+
+# 定时触发编译
   schedule:
-    - cron: '0 0 * * *' 
+    - cron: 0 0 * * 0
 
 jobs:
-  delete_old_releases:
+  Delete-Old-Workflows:
     runs-on: ubuntu-20.04
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    - name: Clone Repository
+      uses: actions/checkout@v4
 
-    - name: Install gh CLI
-      run: |
-        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-        sudo apt-add-repository https://cli.github.com/packages
-        sudo apt update
-        sudo apt install gh
+    - name: Set git
+      run : |
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        sudo timedatectl set-timezone "Asia/Shanghai"
 
-    - name: List recent releases
-      run: gh release list --limit 3 --json name
-
-    - name: Delete old releases
-      run: |
-        releases=$(gh release list --limit 3 --json name | jq -r '.[].name')
-        for release in $releases; do
-          gh release delete $release
-        done
+    - name: Delete workflow runs
+      uses: Mattraks/delete-workflow-runs@main
+      continue-on-error: true
+      with:
+        retain_days: 7
+        keep_minimum_runs: 0
