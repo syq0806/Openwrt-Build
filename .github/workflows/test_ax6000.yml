@@ -81,6 +81,11 @@ jobs:
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
         
+    - name: 更新  feeds
+      run: |
+        cd openwrt
+        ./scripts/feeds update -a
+        
     - name: 下载安装包
       id: package
       run: |
