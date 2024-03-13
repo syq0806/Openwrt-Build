@@ -72,6 +72,7 @@ jobs:
       run: |
         cd openwrt
         ./scripts/feeds update -a
+        git clone -b master --single-branch https://github.com/immortalwrt/packages.git packages_master && rm -rf ./feeds/packages/lang/golang && mv ./packages_master/lang/golang ./feeds/packages/lang && rm -rf ./packages_master
         ./scripts/feeds install -a
       
     - name: 加载config & DIY_P2_SH
@@ -80,25 +81,7 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-        
-
-    - name: 更新 & 安装 feeds
-      run: |
-        cd openwrt
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a
-        
-    - name: 替换passwall shadowsocks-rust的Makefiles(临时)
-      run: |
-        cd openwrt
-        curl -s https://raw.githubusercontent.com/kenzok8/small/master/shadowsocks-rust/Makefile | sed 's/^/ /' > feeds/passwall_packages/shadowsocks-rust/Makefile       
-    
-    - name: 更新 & 安装 feeds
-      run: |
-        cd openwrt
-        ./scripts/feeds update -a
-        ./scripts/feeds install -a                   
-    
+       
     - name: 下载安装包
       id: package
       run: |
