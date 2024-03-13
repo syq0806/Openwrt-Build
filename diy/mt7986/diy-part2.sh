@@ -22,4 +22,4 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-n
 # curl -sL https://raw.githubusercontent.com/pymumu/smartdns/master/package/openwrt/Makefile > feeds/packages/net/smartdns/Makefile
 
 ########### 更新内置的passwall版本 ###########
-sed -i '/PKG_CONFIG_DEPENDS/ i\PKG_VERSION:=$(PKG_VERSION)-smartdns-dev' feeds/luci/applications/luci-app-passwall/Makefile
+sed -i '/PKG_CONFIG_DEPENDS:= \\/i PKG_VERSION:=$(PKG_VERSION)-smartdns-dev' feeds/luci/applications/luci-app-passwall/Makefile
