@@ -11,6 +11,9 @@
 #
 
 ####### 科学上网插件 #######
-# echo 'src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages.git;main' >>feeds.conf.default
-# echo 'src-git passwall_luci https://github.com/xiaorouji/openwrt-passwall.git;luci-smartdns-dev' >>feeds.conf.default
-# echo 'src-git passwall_luci https://github.com/xiaorouji/openwrt-passwall.git;main' >>feeds.conf.default
+git clone https://github.com/xiaorouji/openwrt-passwall -b luci-smartdns-dev package/luci-app-passwall
+git clone https://github.com/xiaorouji/openwrt-passwall-packages package/luci-app-passwall-packages
+
+####### Smartdns插件 #######
+git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
+git clone https://github.com/pymumu/luci-app-smartdns -b master package/luci-app-smartdns
