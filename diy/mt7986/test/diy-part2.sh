@@ -56,6 +56,6 @@ sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:='"$SMAERTDNS_SHA"'/g' packa
 sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$SMARTDNS_VER"'/g' package/luci-app-smartdns/Makefile
 sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' package/luci-app-smartdns/Makefile
 ########### 更新passwall rust 依赖 ###########
-git clone https://github.com/immortalwrt/packages feeds/im-packages 
-cp -r feeds/im-packages/lang/rust feeds/packages/lang
-rm -rf feeds/im-packages
+# git clone https://github.com/immortalwrt/packages feeds/im-packages 
+# cp -r feeds/im-packages/lang/rust feeds/packages/lang
+# rm -rf feeds/im-packages
