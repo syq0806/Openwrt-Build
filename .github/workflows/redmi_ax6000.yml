@@ -7,7 +7,7 @@
 # https://github.com/P3TERX/Actions-OpenWrt
 # Description: Build OpenWrt using GitHub Actions
 #
-name: Build Redmi_AX6000_ImmortalWrt
+name: Build Redmi_AX6000_ImmortalWrt_Test
 
 on:
   repository_dispatch:
@@ -80,7 +80,7 @@ jobs:
         chmod +x $DIY_P2_SH
         cd openwrt
         $GITHUB_WORKSPACE/$DIY_P2_SH
-        
+       
     - name: 下载安装包
       id: package
       run: |
@@ -140,7 +140,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "release_tag=${{ env.FILE_DATE }}" >> $GITHUB_OUTPUT
+        echo "release_tag=Redmi_AX6000-ImmortalWrt-${{ env.FILE_DATE }}" >> $GITHUB_OUTPUT
         touch release.txt
         echo "📥 固件下载" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
