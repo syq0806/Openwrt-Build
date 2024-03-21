@@ -151,7 +151,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        files: ${{ env.FIRMWARE }}/*.img.gz
+        files: ${{ env.FIRMWARE }}/*squashfs-combined*
         name: 软路由（X86_64）-ImmortalWrt-${{ env.FILE_DATE }}
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
