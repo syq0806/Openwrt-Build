@@ -18,3 +18,5 @@ curl -s https://raw.githubusercontent.com/sbwml/openwrt_helloworld/v5/shadowsock
 ####### Smartdns插件 #######
 git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
 git clone https://github.com/pymumu/luci-app-smartdns -b master package/luci-app-smartdns
+####### DDNS-GO插件 #######
+git clone https://github.com/sirpdboy/luci-app-ddns-go package/ddns-go
