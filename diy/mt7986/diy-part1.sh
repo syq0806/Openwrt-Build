@@ -10,6 +10,9 @@
 # Description: OpenWrt DIY script part 1 (Before Update feeds)
 #
 
+# Add a feed source
+sed -i '$a src-git openwrt_kiddin9 https://github.com/kiddin9/openwrt-packages' feeds.conf.default
+
 ####### 科学上网插件 #######
 git clone https://github.com/xiaorouji/openwrt-passwall -b luci-smartdns-dev package/luci-app-passwall
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/luci-app-passwall-packages
