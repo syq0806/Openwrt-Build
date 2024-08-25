@@ -9,7 +9,7 @@
 # File name: diy-part1.sh
 # Description: OpenWrt DIY script part 1 (Before Update feeds)
 #
-
+sed -i '$a src-git openclash https://github.com/vernesong/OpenClash.git' feeds.conf.default
 
 ####### 科学上网插件 #######
 git clone https://github.com/xiaorouji/openwrt-passwall -b luci-smartdns-dev package/luci-app-passwall
