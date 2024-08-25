@@ -3,6 +3,8 @@
 del_data="
 ./feeds/luci/applications/luci-app-passwall
 ./feeds/luci/applications/luci-app-smartdns
+./feeds/luci/themes/luci-theme-argon
+./feeds/luci/applications/luci-app-argon-config
 ./feeds/packages/net/smartdns
 ./feeds/packages/net/brook
 ./feeds/packages/net/dns2socks
@@ -50,17 +52,9 @@ rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
 
 ########### 更新smartdns版本 ###########
-# SMARTDNS_VER=$(echo -n `curl -sL https://api.github.com/repos/pymumu/smartdns/commits | jq .[0].commit.committer.date | awk -F "T" '{print $1}' | sed 's/\"//g' | sed 's/\-/\./g'`)
-# SMAERTDNS_SHA=$(echo -n `curl -sL https://api.github.com/repos/pymumu/smartdns/commits | jq .[0].sha | sed 's/\"//g'`)
-# sed -i '/PKG_MIRROR_HASH:=/d' package/smartdns/Makefile
-# sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$SMARTDNS_VER"'/g' package/smartdns/Makefile
-# sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:='"$SMAERTDNS_SHA"'/g' package/smartdns/Makefile
-# sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$SMARTDNS_VER"'/g' package/luci-app-smartdns/Makefile
-# sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' package/luci-app-smartdns/Makefile
 SMARTDNS_JSON=$(curl -sL https://api.github.com/repos/pymumu/smartdns/commits)
 SMARTDNS_VER=$(echo -n `echo ${SMARTDNS_JSON} | jq -r .[0].commit.committer.date | awk -F "T" '{print $1}' | sed 's/\-/\./g'`)
 SMAERTDNS_SHA=$(echo -n `echo ${SMARTDNS_JSON} | jq -r .[0].sha`)
-
 sed -i '/PKG_MIRROR_HASH:=/d' package/smartdns/Makefile
 sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$SMARTDNS_VER"'/g' package/smartdns/Makefile
 sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:='"$SMAERTDNS_SHA"'/g' package/smartdns/Makefile
