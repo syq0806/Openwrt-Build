@@ -15,7 +15,6 @@ sed -i '$a src-git openclash https://github.com/vernesong/OpenClash.git' feeds.c
 git clone https://github.com/xiaorouji/openwrt-passwall -b luci-smartdns-dev package/luci-app-passwall
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/luci-app-passwall-packages
 curl -s https://raw.githubusercontent.com/sbwml/openwrt_helloworld/v5/shadowsocks-rust/Makefile | sed 's/^/ /' > package/luci-app-passwall-packages/shadowsocks-rust/Makefile
-git clone https://github.com/vernesong/OpenClash package/luci-app-openclash
 ####### Smartdns插件 #######
 git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
 git clone https://github.com/pymumu/luci-app-smartdns -b master package/luci-app-smartdns
