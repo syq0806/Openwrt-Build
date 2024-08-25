@@ -3,8 +3,8 @@
 del_data="
 ./feeds/luci/applications/luci-app-passwall
 ./feeds/luci/applications/luci-app-smartdns
-./feeds/luci/themes/luci-theme-argon
-./feeds/luci/applications/luci-app-argon-config
+./feeds/luci/applications/luci-app-upnp
+./feeds/packages/net/miniupnpd
 ./feeds/packages/net/smartdns
 ./feeds/packages/net/brook
 ./feeds/packages/net/dns2socks
