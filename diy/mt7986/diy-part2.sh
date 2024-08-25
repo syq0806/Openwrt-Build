@@ -5,8 +5,6 @@ del_data="
 ./feeds/luci/applications/luci-app-smartdns
 ./feeds/luci/applications/luci-app-openclash
 ./feeds/luci/applications/luci-app-ddns-go
-./feeds/luci/applications/luci-app-upnp
-./feeds/packages/net/miniupnpd
 ./feeds/packages/net/smartdns
 ./feeds/packages/net/ddns-go
 ./feeds/packages/net/brook
