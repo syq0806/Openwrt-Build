@@ -17,3 +17,6 @@ curl -s https://raw.githubusercontent.com/sbwml/openwrt_helloworld/v5/shadowsock
 ####### Smartdns插件 #######
 git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
 git clone https://github.com/pymumu/luci-app-smartdns -b master package/luci-app-smartdns
+####### 更换argon主题 #######
+git clone https://github.com/jerrykuku/luci-theme-argon package/luci-theme-argon
+git clone https://github.com/jerrykuku/luci-app-argon-config package/luci-app-argon-config
