@@ -15,7 +15,7 @@
 git clone https://github.com/xiaorouji/openwrt-passwall -b luci-smartdns-dev package/luci-app-passwall
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/luci-app-passwall-packages
 curl -s https://raw.githubusercontent.com/sbwml/openwrt_helloworld/v5/shadowsocks-rust/Makefile | sed 's/^/ /' > package/luci-app-passwall-packages/shadowsocks-rust/Makefile
-git clone -b master --depth=1 --filter=blob:none --sparse https://github.com/vernesong/OpenClash.git package/luci-app-openclash
+git clone -b master --depth=1 --filter=blob:none --sparse https://github.com/vernesong/OpenClash package/luci-app-openclash
 # git -C package/luci-app-openclash sparse-checkout set luci-app-openclash
 ####### Smartdns插件 #######
 git clone https://github.com/pymumu/openwrt-smartdns package/smartdns
