@@ -59,5 +59,4 @@ sed -i '/PKG_MIRROR_HASH:=/d' package/smartdns/Makefile
 sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$SMARTDNS_VER"'/g' package/smartdns/Makefile
 sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:='"$SMAERTDNS_SHA"'/g' package/smartdns/Makefile
 sed -i 's/PKG_VERSION:=.*/PKG_VERSION:='"$SMARTDNS_VER"'/g' package/luci-app-smartdns/Makefile
-sed -i 's/href = "smartdns"/href = "\/cgi-bin\/luci\/admin\/services\/smartdns"/g' package/luci-app-smartdns/htdocs/luci-static/resources/view/smartdns/log.js
 sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' package/luci-app-smartdns/Makefile
