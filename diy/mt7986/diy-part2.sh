@@ -49,7 +49,7 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-n
 
 ########### 更新内置的golang版本 ###########
 rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 22.x feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 23.x feeds/packages/lang/golang
 
 ########### 更新smartdns版本 ###########
 SMARTDNS_JSON=$(curl -sL https://api.github.com/repos/pymumu/smartdns/commits)
